@@ -1,0 +1,322 @@
+<?php 
+
+session_start();
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>GoalGear</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="eCommerce HTML Template Free Download" name="keywords">
+        <meta content="eCommerce HTML Template Free Download" name="description">
+
+        <!-- Favicon -->
+        <link href="img/icono.png" rel="icon">
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap" rel="stylesheet">
+
+        <!-- CSS Libraries -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="lib/slick/slick.css" rel="stylesheet">
+        <link href="lib/slick/slick-theme.css" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="css/style1.css" rel="stylesheet">
+    
+        <script>
+function validar()
+    {
+        var question = document.getElementById("frminsertar").value;
+
+        if (question.trim().length<1) 
+        {
+            alert("El campo pregunta de recuperacion esta vacío");
+            return false;
+        }
+
+
+
+        return true;
+    }
+
+  function validateEmail(){
+                
+	// Get our input reference.
+	var emailField = document.getElementById('txtcorreo');
+	
+	// Define our regular expression.
+	var validEmail =  /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+
+	// Using test we can check if the text match the pattern
+	if( validEmail.test(emailField.value) ){
+		return true;
+	}else{
+		alert('El correo es invalido');
+		return false;
+	}
+} 
+
+
+</script>
+    </head>
+    <?php 
+require 'bd/conexion_bd.php';
+
+$obj = new BD_PDO();
+
+if (isset($_POST['btniniciar'])) {
+    @$respuesta = $_POST['txtrespuesta']; 
+
+    // Obtener el correo electrónico del usuario de la sesión
+    if(isset($_SESSION['email'])) {
+        $email = $_SESSION['email'];
+    } else {
+        // Si el correo electrónico no está en la sesión, redireccionar o manejar el error según sea necesario
+        echo "<script>alert('No se ha encontrado el correo electrónico en la sesión')</script>";
+        // Aquí puedes redireccionar a una página de error o a donde consideres apropiado
+        // echo '<script>window.location = "error.php"; </script>';
+        exit; // Terminar la ejecución del script
+    }
+
+    // Obtener la pregunta de recuperación de la sesión
+    if(isset($_SESSION['pregunta'])) {
+        $pregunta = $_SESSION['pregunta'];
+    } else {
+        // Manejar el caso en el que la pregunta no esté en la sesión
+        echo "<script>alert('No se ha encontrado la pregunta de recuperación en la sesión')</script>";
+        // Aquí puedes redireccionar a una página de error o a donde consideres apropiado
+        // echo '<script>window.location = "error.php"; </script>';
+        exit; // Terminar la ejecución del script
+    }
+
+    // Realizar la consulta utilizando el correo electrónico, la pregunta de recuperación y la respuesta
+    $datos = $obj->Ejecutar_Instruccion("SELECT * FROM usuarios WHERE email='$email' AND pregunta='$pregunta' AND respuesta='$respuesta'");
+
+    if($respuesta==$datos[0][11]) {
+        $_SESSION['email'] = $email;
+        $_SESSION['pregunta'] = $pregunta;
+        $_SESSION['respuesta'] = $respuesta;
+        echo "<script>alert('Tu respuesta coincide con la respuesta registrada')</script>";
+        echo '<script>window.location = "password.php"; </script>';
+    } else {
+        echo "<script>alert('La respuesta no coincide con la registrada')</script>";
+    }
+}
+?>
+
+
+
+    <body style=" background-image: url('img/foto-18.jpg');
+    background-color:  rgba(244, 58, 80, .5); /* Color rojo con opacidad 0.5 */
+    background-blend-mode: overlay; /* Mezcla la imagen de fondo y el color */
+    background-size: cover; /* Ajusta la imagen de fondo para cubrir todo el área */
+    background-position: center; /* Centra la imagen de fondo */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    height: 100vh; /* Altura igual a la altura de la ventana del navegador */">
+        <!-- Top bar Start -->
+        <div class="top-bar">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <i class="fa fa-envelope"></i>
+                        Goalgear@gmail.com
+                    </div>
+                    <div class="col-sm-6">
+                        <i class="fa fa-phone-alt"></i>
+                        +52-878-137-0387
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Top bar End -->
+        
+        <!-- Nav Bar Start -->
+        <div class="nav">
+            <div class="container-fluid">
+                <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+                    <a href="#" class="navbar-brand">MENU</a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav mr-auto">
+                            <br>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- Nav Bar End -->     
+        
+        <!-- Bottom Bar Start -->
+        <div class="bottom-bar">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-md-3">
+                        <div class="logo">
+                            <a href="index.php">
+                                <img style="max-width: 60%; height: 100px; width: 60%;" src="img/Logo-goal.png" alt="Logo">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="search">
+                            <input type="text" placeholder="Search">
+                            <button><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="user">
+                            <a href="wishlist.html" class="btn wishlist">
+                                <i class="fa fa-home"></i>
+                                <span>(0)</span>
+                            </a>
+                            <a href="cart.html" class="btn cart">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span>(0)</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bottom Bar End --> 
+        
+        
+        <!-- Breadcrumb End -->
+        
+        <!-- Login Start -->
+        <div class="datos-cent">
+        <div class="login">
+            <div class="container" >
+                <div class="row " >
+                    <div class="col-lg-7">    
+                        <div class="register-form datos-cent">
+                            <div class="row">
+                            <form action="response.php" id="frminsertar" name="frminsertar" method="POST" onsubmit="return validar()">
+                            <div class="col-md-10">
+                            <label>¿Recuerdas tu respuesta para recuperar tu contraseña?</label>
+                <input class="form-control" type="text" placeholder="Respuesta" name="txtrespuesta" id="txtrespuesta" minlength="1"  style="width: 425px;">
+                                </div>
+                                <br>
+                                <div class="col-md-12" style="padding-left:43%;">
+                                <input type="submit" name="btniniciar" id="btniniciar" class="btn" value="Enviar">
+                                    
+                                </div>
+                                <br><br>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+</div>
+        <!-- Login End -->
+        
+       <!-- Footer Start -->
+       <div class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-widget">
+                            <h2>Contactanos</h2>
+                            <div class="contact-info">
+                                <p><i class="fa fa-map-marker"></i>Plaza Innova, Piedras Negras, MX</p>
+                                <p><i class="fa fa-envelope"></i>GoalGear@gmail.com</p>
+                                <p><i class="fa fa-phone"></i>+52-878-137-0387</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-widget">
+                            <h2>Siguenos</h2>
+                            <div class="contact-info">
+                                <div class="social">
+                                    <a href=""><i class="fab fa-twitter"></i></a>
+                                    <a href=""><i class="fab fa-facebook-f"></i></a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-widget">
+                            <h2>Empresa</h2>
+                            <ul>
+                                <li><a href="#">Conocenos</a></li>
+                                <li><a href="#">Politica de privacidad</a></li>
+                                <li><a href="#">Terminos y Condiciones</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-widget">
+                            <h2>Mas informacion</h2>
+                            <ul>
+                                <li><a href="#">Politicas de pagos</a></li>
+                                <li><a href="#">Politicas de compras</a></li>
+                                <li><a href="#">Politicas de devoluciones</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row payment align-items-center">
+                    <div class="col-md-6">
+                        <div class="payment-method">
+                            <h2>Aceptamos:</h2>
+                            <img src="img/payment-method.png" alt="Payment Method" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="payment-security">
+                            <h2>Protegido por:</h2>
+                            <img src="img/godaddy.svg" alt="Payment Security" />
+                            <img src="img/norton.svg" alt="Payment Security" />
+                            <img src="img/ssl.svg" alt="Payment Security" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
+        
+        <!-- Footer Bottom Start -->
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 copyright">
+                       
+                    </div>
+
+                    <div class="col-md-6 template-by">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer Bottom End -->       
+        
+        <!-- Back to Top -->
+        <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+        
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/slick/slick.min.js"></script>
+        
+        <!-- Template Javascript -->
+        <script src="js/main.js"></script>
+    </body>
+</html>

@@ -1,0 +1,45 @@
+    <div class="col-lg-8">    
+    <div class="register-form">
+        <div class="row">
+            <div class="tab-pane fade" id="recuperar-pass-tab" role="tabpanel" aria-labelledby="account-nav">
+                <h2>Recuperación de contraseña</h2>
+                <label>Pregunta de recuperación de contraseña</label>
+                <select name="frmpregunta" id="frmpregunta" class="form-control" style="width: 633px;">
+                    <option disabled selected value="">Seleccione una pregunta</option>
+                    <option value="¿Cuál es el nombre de tu primera mascota?">¿Cuál es el nombre de tu primera mascota?</option>
+                    <option value="¿Cuál es el nombre de tu mejor amigo?">¿Cuál es el nombre de tu mejor amig@?</option>
+                    <option value="¿Cuál es tu color favorito?">¿Cuál es tu color favorito?</option>
+                    <option value="¿Cuál es tu equipo de fútbol favorito?">¿Cuál es tu equipo de fútbol favorito?</option>
+                    <option value="¿Cuál es tu dorsal de fútbol?">¿Cuál es tu dorsal de fútbol?</option>
+                </select>
+                <label>Respuesta para recuperar contraseña</label>
+                <input class="form-control" type="text" placeholder="Respuesta" name="txtrespuesta" id="txtrespuesta" minlength="5" value="<?php echo @$editar[0][11] ?>" style="width: 633px;">
+            </div>
+            <br>
+            <div style="padding-left:64%;">
+                <input type="submit" class="btn" id="btninsertar" name="btninsertar" value="<?php 
+                    if (isset($editar[0][0])) {
+                        echo 'Guardar';
+                    } else {
+                        echo 'Insertar';
+                    }?>">
+            </div>
+        </div>
+    </div>
+</div>
+
+<a class="nav-link" id="account-nav" data-toggle="pill" href="#recuperar-pass-tab" role="tab"><i class="fa-solid fa-at"></i>Pregunta de recuperacion</a>\
+
+
+
+<div class="col-md-10">
+                                    <label>¿Recuerdas tu correo?</label>
+                                    <select name="frmpregunta" id="frmpregunta" class="form-control" style="width: 425px;">
+                    <option disabled selected value=""><?php echo @$datos[0][10] ?></option>
+                    <option value="¿Cuál es el nombre de tu primera mascota?"></option>
+                    <option value="¿Cuál es el nombre de tu mejor amigo?">¿Cuál es el nombre de tu mejor amig@?</option>
+                    <option value="¿Cuál es tu color favorito?">¿Cuál es tu color favorito?</option>
+                    <option value="¿Cuál es tu equipo de fútbol favorito?">¿Cuál es tu equipo de fútbol favorito?</option>
+                    <option value="¿Cuál es tu dorsal de fútbol?">¿Cuál es tu dorsal de fútbol?</option>
+                </select>
+                                </div>
