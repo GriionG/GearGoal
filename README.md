@@ -1,2 +1,2 @@
-# GearGoal
-PWE de GearGoal
+# pwa
+pwa de geargoal
